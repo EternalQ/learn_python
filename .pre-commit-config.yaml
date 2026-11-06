@@ -7,16 +7,15 @@ repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.17.3
     hooks:
-      - id: ruff
+      - id: ruff-check
         args: [--fix]
-        alias: ruff-check
       - id: ruff-format
 
   - repo: local
     hooks:
       - id: mypy
         name: mypy (local uv environment)
-        entry: uv run mypy .
+        entry: uv run mypy
         language: system
         pass_filenames: false
         types: [python]

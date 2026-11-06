@@ -1,15 +1,21 @@
 import logging
 
-from marketlens.config import get_settings
+from marketlens.config import LogLevel, get_settings
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
+
+def configure_logger(level: LogLevel) -> None:
+    logging.basicConfig(
+        level=level,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+
 
 logger = logging.getLogger(__name__)
 
 
 def main() -> None:
-    logger.info("config:\n%s", get_settings().model_dump_json(indent=2))
+    settings = get_settings()
+    configure_logger(settings.log_level)
+    print(settings.model_dump_json(indent=2))
+    logger.info("config loaded")
